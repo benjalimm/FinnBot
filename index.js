@@ -58,7 +58,7 @@ intents.matches('logExpense', [
     function (session, results) {
         if (results.itemResponse) {
             // ... save task
-            session.send(results.itemResponse " costs " + results.costResponse);
+            session.send(results.itemResponse + " costs " + results.costResponse);
         } else {
             session.send("Ok");
         }
