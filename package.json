@@ -1,0 +1,23 @@
+{
+  "name": "finnbot",
+  "version": "1.0.0",
+  "description": "The life of Finn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjalimm/FinnBot.git"
+  },
+  "author": "Benjamin Lim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benjalimm/FinnBot/issues"
+  },
+  "homepage": "https://github.com/benjalimm/FinnBot#readme",
+  "dependencies": {
+    "botbuilder": "^3.4.4",
+    "restify": "^4.3.0"
+  }
+}
