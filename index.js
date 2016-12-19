@@ -52,13 +52,13 @@ intents.matches('logExpense', [
         if (!item) {
             builder.Prompts.text(session, "What expense are you trying to log?");
         } else {
-            next({ response: item.entity});
+            next({ itemResponse: item.entity, costResponse: cost.entity });
         }
     },
     function (session, results) {
-        if (results.response) {
+        if (results.itemResponse) {
             // ... save task
-            session.send("Ok... Added the '%s' item.", results.response);
+            session.send(itemResponse " costs " + costResponse);
         } else {
             session.send("Ok");
         }
