@@ -48,7 +48,7 @@ bot.dialog('/', intents);
 intents.matches('logExpense', [
     function (session, args, next) {
         var item = builder.EntityRecognizer.findEntity(args.entities, 'Item');
-        var cost = builder.EntityRecognizer.findEntity(args.entities, 'money');
+        var cost = builder.EntityRecognizer.findEntity(args.entities, 'builtin.money');
         if (!item) {
             builder.Prompts.text(session, "What expense are you trying to log?");
         } else {
