@@ -51,7 +51,7 @@ intents.matches('logExpense', [
         var cost = builder.EntityRecognizer.findEntity(args.entities, 'money');
         if (!item) {
             builder.Prompts.text(session, "What expense are you trying to log?");
-        } else {ß
+        } else {
             next({ response: item.entity + cost.entity });
         }
     },
