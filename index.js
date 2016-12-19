@@ -1,6 +1,9 @@
 // Add your requirements
 var restify = require('restify');
 var builder = require('botbuilder');
+var recognizer = new builder.LuisRecognizer('https://api.projectoxford.ai/luis/v2.0/apps/cdb04d45-bcda-427b-a7fe-c0c5e5736596?subscription-key=b74e88b7598949a781a39931a8aa610d&verbose=true')
+var intents = new builder.IntentDialog({ recognizers: [recognizer] });
+
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -17,26 +20,48 @@ var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
 // Create bot dialogs
-bot.dialog('/', [
+// bot.dialog('/', [
+//     function (session, args, next) {
+//         if (!session.userData.name) {
+//             session.beginDialog('/profile');
+//         } else {
+//             next();
+//         }
+//     },
+//     function (session, results) {
+//         session.send('Hello %s!', session.userData.name);
+//     }
+// ]);
+//
+// bot.dialog('/profile', [
+//     function (session) {
+//         builder.Prompts.text(session, 'Hi! What is your name?');
+//     },
+//     function (session, results) {
+//         session.userData.name = results.response;
+//         session.endDialog();
+//     }
+// ]);
+
+bot.dialog('/', intents);
+
+intents.matches('logExpense', [
     function (session, args, next) {
-        if (!session.userData.name) {
-            session.beginDialog('/profile');
-        } else {
-            next();
+        var item = builder.EntityRecognizer.findEntity(args.entities, 'Item')
+        var cost = builder.EntityRecognizer.findEntity(args.entities, 'money');
+        if (!item) {
+            builder.Prompts.text(session, "What expense are you trying to log?");
+        } else {ß
+            next({ response: item.entity + cost.entity });
         }
     },
     function (session, results) {
-        session.send('Hello %s!', session.userData.name);
-    }
-]);
-
-bot.dialog('/profile', [
-    function (session) {
-        builder.Prompts.text(session, 'Hi! What is your name?');
-    },
-    function (session, results) {
-        session.userData.name = results.response;
-        session.endDialog();
+        if (results.response) {
+            // ... save task
+            session.send("Ok... Added the '%s' item.", results.response);
+        } else {
+            session.send("Ok");
+        }
     }
 ]);
 
